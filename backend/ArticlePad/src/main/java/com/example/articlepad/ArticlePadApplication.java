@@ -18,7 +18,7 @@ public class ArticlePadApplication implements CommandLineRunner {
 	private AuthorRepository authorRepository;
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		Author author = new Author("Anna", "Marnie", "annamarnie@gmail.com", "Anna_1103!@");
 	}
 }

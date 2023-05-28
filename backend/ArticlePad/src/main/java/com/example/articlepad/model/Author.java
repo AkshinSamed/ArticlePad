@@ -1,12 +1,18 @@
 package com.example.articlepad.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "authors")
+@NoArgsConstructor
+@Getter
+@Setter
 public class Author {
 
     @Id
@@ -22,6 +28,11 @@ public class Author {
     @Column(name = "articles")
     private List<Article> articleList = new ArrayList<>();
 
-    // constructors, getters and setters
+    public Author(String name, String surname, String email, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+    }
 
 }
