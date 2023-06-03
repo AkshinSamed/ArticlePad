@@ -1,20 +1,20 @@
 package com.example.articlepad.service.implement;
 
+import com.example.articlepad.exception.ResourceNotFoundException;
 import com.example.articlepad.model.Author;
 import com.example.articlepad.repository.AuthorRepository;
 import com.example.articlepad.service.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorServiceImplement implements AuthorService {
 
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
-    public AuthorServiceImplement(AuthorRepository authorRepository){
-        this.authorRepository = authorRepository;
-    }
     @Override
     public Author saveAuthor(Author author) {
         return authorRepository.save(author);
@@ -26,11 +26,11 @@ public class AuthorServiceImplement implements AuthorService {
     }
 
     @Override
-    public Author updateAuthor(Long id, Author authorDetails) {
+    public Author updateAuthor(Long id, Author authorDetails) throws ResourceNotFoundException {
         Author author = authorRepository
-                                        .findById(id)
-                                        .orElseThrow(
-                                        () -> new ResourceNotFoundException("Author not exist with Id: " + id) );
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Author not exist with Id: " + id));
         author.setName(authorDetails.getName());
         author.setSurname(authorDetails.getSurname());
         author.setPassword(authorDetails.getPassword());
@@ -41,11 +41,11 @@ public class AuthorServiceImplement implements AuthorService {
     }
 
     @Override
-    public void deleteAuthor(Long id) {
+    public void deleteAuthor(Long id) throws ResourceNotFoundException {
         Author author = authorRepository
-                                        .findById(id)
-                                        .orElseThrow(
-                                        () -> new ResourceNotFoundException("Author not exist with Id: " + id) );
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Author not exist with Id: " + id));
         authorRepository.delete(author);
     }
 }
